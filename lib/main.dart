@@ -29,10 +29,6 @@ void main() async {
     url: dotenv.get('DB_URL'),
     anonKey:  dotenv.get('DB_KEY'),
   );
-
-  print(dotenv.get('DB_KEY'));
-  
-  print(dotenv.get('DB_URL'));
   runApp(const Warung());
 }
 

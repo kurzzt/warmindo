@@ -25,6 +25,7 @@ class WarungScaffold extends StatelessWidget {
           if (idx == 1) goRouter.go('/authors');
           if (idx == 2) goRouter.go('/roles');
           if (idx == 3) goRouter.go('/settings');
+          if (idx == 4) goRouter.go('/users');
         },
         destinations: const [
           AdaptiveScaffoldDestination(
@@ -42,6 +43,10 @@ class WarungScaffold extends StatelessWidget {
           AdaptiveScaffoldDestination(
             title: 'Settings',
             icon: Icons.settings,
+          ),
+          AdaptiveScaffoldDestination(
+            title: 'Users',
+            icon: Icons.person,
           ),
         ],
       ),

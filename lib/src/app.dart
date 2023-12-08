@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:warung_sample/src/data/userHandler.dart';
+import 'package:warung_sample/src/screens/add_user.dart';
+import 'package:warung_sample/src/screens/user_details.dart';
+import 'package:warung_sample/src/screens/users.dart';
 import 'package:warung_sample/src/screens/roles.dart';
 
 import 'auth.dart';
@@ -58,8 +62,9 @@ class _WarungState extends State<Warung> {
                 selectedIndex: switch (state.uri.path) {
                   var p when p.startsWith('/books') => 0,
                   var p when p.startsWith('/authors') => 1,
-                  var p when p.startsWith('/settings') => 2,
-                  var p when p.startsWith('/role') => 3,
+                  var p when p.startsWith('/roles') => 2,
+                  var p when p.startsWith('/settings') => 3,
+                  var p when p.startsWith('/users') => 4,
                   _ => 0,
                 },
                 child: child,
@@ -238,7 +243,7 @@ class _WarungState extends State<Warung> {
                 pageBuilder: (context, state) {
                   return FadeTransitionPage<dynamic>(
                     key: state.pageKey,
-                    child: RolesScreen(title: 'Roles',),
+                    child: RolesScreen(),
                   );
                 },
               ),
@@ -251,10 +256,45 @@ class _WarungState extends State<Warung> {
                   );
                 },
               ),
+              GoRoute(
+                  path: '/users',
+                  pageBuilder: (context, state) {
+                    return FadeTransitionPage<dynamic>(
+                      key: state.pageKey,
+                      child: Builder(builder: (context) {
+                        return UsersScreen(
+                          onTap: (user) {
+                            GoRouter.of(context)
+                            .go('/users/${user['id']}');
+                          },
+                        );
+                        }
+                      )
+                    );
+                  },
+                  routes: [
+                    GoRoute(
+                      path: 'add',
+                      builder: (context, state) {
+                        return Builder(builder: (context) {
+                          return AddUserScreen();
+                        });
+                      }
+                    ),
+                    GoRoute(
+                      path: ':userId',
+                      builder: (context, state) {
+                        final userId = int.parse(state.pathParameters['userId']!);
+                        return Builder(builder: (context) {
+                          return UserDetailsScreen(
+                            userId: userId
+                          );
+                        });
+                      }
+                    )
+                  ]),
             ],
           ),
-          
-          
           GoRoute(
             path: '/sign-in',
             builder: (context, state) {
