@@ -23,8 +23,8 @@ class WarungScaffold extends StatelessWidget {
         onDestinationSelected: (idx) {
           if (idx == 0) goRouter.go('/books/popular');
           if (idx == 1) goRouter.go('/authors');
-          if (idx == 2) goRouter.go('/settings');
-          if (idx == 3) goRouter.go('/roles');
+          if (idx == 2) goRouter.go('/roles');
+          if (idx == 3) goRouter.go('/settings');
         },
         destinations: const [
           AdaptiveScaffoldDestination(

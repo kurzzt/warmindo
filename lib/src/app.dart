@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:warung_sample/src/screens/roles.dart';
 
 import 'auth.dart';
 import 'data.dart';
@@ -233,16 +234,16 @@ class _WarungState extends State<Warung> {
                 ],
               ),
               GoRoute(
-                path: '/settings',
+                path: '/roles',
                 pageBuilder: (context, state) {
                   return FadeTransitionPage<dynamic>(
                     key: state.pageKey,
-                    child: const SettingsScreen(),
+                    child: RolesScreen(title: 'Roles',),
                   );
                 },
               ),
               GoRoute(
-                path: '/roles',
+                path: '/settings',
                 pageBuilder: (context, state) {
                   return FadeTransitionPage<dynamic>(
                     key: state.pageKey,
