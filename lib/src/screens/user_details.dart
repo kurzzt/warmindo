@@ -1,52 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:warung_sample/src/data/userHandler.dart';
 
-class UserDetailsScreen extends StatefulWidget {
-  final int userId;
+class UserDetailsScreen extends StatelessWidget {
+  final dynamic user;
 
   UserDetailsScreen({
-    required this.userId,
     super.key,
+    this.user,
   });
 
   @override
-  State<UserDetailsScreen> createState() => _UserDetailsScreenState();
-}
-
-class _UserDetailsScreenState extends State<UserDetailsScreen> {
-  UserHandler userHandler = UserHandler();
-
-  @override
   Widget build(BuildContext context) { 
-    final _future = userHandler.readDataById(int.parse(widget.userId.toString()));
+    final Map userr = Map.from(user);
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.userId.toString()),
+        title: Text(userr['nama']),
       ),
-      body: FutureBuilder(
-        builder: (context, AsyncSnapshot snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          final user = snapshot.data![0];
-          return ListView(
-            padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
-            children: [
-              Center(
-                child : CircleAvatar(
-                  backgroundImage: NetworkImage(user["foto"]),
-                  minRadius: 100,
-                ),
-              ),
-              Text('Username : ${user["username"]}'),
-              Text('Nama : ${user["nama"]}'),
-              Text('Status : ${(user["status"]) ? "Aktif" : "Tidak Aktif"}'),
-              Text('Role : ${user["role"]['nama']}'),
-            ],
-          );
-        },
-        future: _future
-      ),
+      body: ListView(
+        padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
+        children: [
+          Center(
+            child : CircleAvatar(
+              backgroundImage: NetworkImage(userr['foto']),
+              minRadius: 100,
+            ),
+          ),
+          Text('Username : ${userr['username']}'),
+          Text('Nama : ${userr['nama']}'),
+          Text('Status : ${(userr['status']) ? "Aktif" : "Tidak Aktif"}'),
+          Text('Role : ${userr['role']['nama']}'),
+        ],
+      )
     );
   }
 }

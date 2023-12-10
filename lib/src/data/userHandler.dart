@@ -1,12 +1,12 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
+
 class User{
   final int id;
   final String username;
   final String nama;
   final String foto;
   final bool status;
-  // ignore: non_constant_identifier_names
-  final int id_role;
+  final int roleId;
 
   User(
     this.id,
@@ -14,28 +14,8 @@ class User{
     this.nama,
     this.foto,
     this.status,
-    this.id_role,
+    this.roleId,
   );
-
-  // User.fromMap(Map<String, dynamic> map)
-  //   : id = map['id'],
-  //     username = map['username'],
-  //     nama = map['nama'],
-  //     foto = map['foto'],
-  //     status = map['status'],
-  //     id_role = map['is_role'];
-
-  // factory User.fromJson(Map<String, dynamic> json) {
-  // return User(
-  //   json['id'],
-  //   json['username'],
-  //   json['nama'],
-  //   json['foto'],
-  //   json['status'],
-  //   json['id_role'],
-  // );
-// }
-
 }
 
 class UserHandler {
@@ -44,38 +24,26 @@ class UserHandler {
     String namaValue, 
     String passValue, 
     String fotoValue, 
+    bool statusValue,
     int roleidValue, 
-    bool statusValue
   ) async {
-    var response = await Supabase.instance.client
+    await Supabase.instance.client
         .from('pengguna')
         .insert({ 
           'username': usernameValue, 
           'nama': namaValue,
           'password': passValue,
           'foto': fotoValue,
-          'status': statusValue 
+          'status': statusValue,
+          'id_role': roleidValue
         });
-
-    print(response);
-    // return response;
   }
 
   readData() async {
     List response = await Supabase.instance.client
         .from('pengguna')
-        .select('*')
-        .order('id', ascending: true);
-    
-    print(response);
-    return response;
-  }
-
-  readDataById(int id) async {
-    var response = await Supabase.instance.client
-        .from('pengguna')
         .select('*, role (id, nama)')
-        .eq('id', id);
+        .order('id', ascending: true);
     return response;
   }
 
@@ -88,7 +56,7 @@ class UserHandler {
     int roleidValue, 
     bool statusValue
   ) async {
-    var response = await Supabase.instance.client
+    await Supabase.instance.client
         .from('pengguna')
         .update({ 
           'username': usernameValue, 
@@ -98,14 +66,12 @@ class UserHandler {
           'status': statusValue 
         })
         .eq('id', id);
-    print(response);
   }
 
   deleteData(int id) async {
-    var response = await Supabase.instance.client
+    await Supabase.instance.client
         .from('pengguna')
         .delete()
         .eq('id', id);
-    print(response);
   }
 }

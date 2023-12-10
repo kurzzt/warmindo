@@ -8,6 +8,7 @@ environment:
 
 dependencies:
   adaptive_navigation: ^0.0.3
+  image_picker: ^0.8.4
   collection: ^1.17.0
   cupertino_icons: ^1.0.2
   flutter:
@@ -25,8 +26,6 @@ dependencies:
       path: plugins/window_size
 
 dev_dependencies:
-  # analysis_defaults:
-  #   path: ../analysis_defaults
   flutter_test:
     sdk: flutter
   test: ^1.24.0

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:warung_sample/src/data/userHandler.dart';
 import 'package:warung_sample/src/screens/add_user.dart';
+import 'package:warung_sample/src/screens/edit_user.dart';
 import 'package:warung_sample/src/screens/user_details.dart';
 import 'package:warung_sample/src/screens/users.dart';
 import 'package:warung_sample/src/screens/roles.dart';
@@ -265,7 +266,11 @@ class _WarungState extends State<Warung> {
                         return UsersScreen(
                           onTap: (user) {
                             GoRouter.of(context)
-                            .go('/users/${user['id']}');
+                            .go('/users/${user['id']}', extra: user);
+                          },
+                          onTapUpdate: (user) {
+                            GoRouter.of(context)
+                            .go('/users/${user['id']}/edit', extra: user);
                           },
                         );
                         }
@@ -284,10 +289,21 @@ class _WarungState extends State<Warung> {
                     GoRoute(
                       path: ':userId',
                       builder: (context, state) {
-                        final userId = int.parse(state.pathParameters['userId']!);
+                        final Object user = GoRouterState.of(context).extra!;
                         return Builder(builder: (context) {
                           return UserDetailsScreen(
-                            userId: userId
+                            user: user
+                          );
+                        });
+                      }
+                    ),
+                    GoRoute(
+                      path: ':userId/edit',
+                      builder: (context, state) {
+                        final Object user = GoRouterState.of(context).extra!;
+                        return Builder(builder: (context) {
+                          return EditUserScreen(
+                            user: user
                           );
                         });
                       }

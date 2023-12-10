@@ -5,9 +5,11 @@ import 'package:warung_sample/src/data/userHandler.dart';
 class UsersScreen extends StatefulWidget {
   final String title;
   final ValueChanged onTap;
+  final ValueChanged onTapUpdate;
 
   const UsersScreen({
     required this.onTap,
+    required this.onTapUpdate,
     this.title = 'Users',
     super.key
   });
@@ -38,7 +40,6 @@ class _UsersScreenState extends State<UsersScreen> {
               itemCount: users.length,
               itemBuilder: (context, index) {
                 final user = users[index];
-                print(user.runtimeType);
                 
                 return ListTile(
                     title: Text(user['nama']),
@@ -51,11 +52,7 @@ class _UsersScreenState extends State<UsersScreen> {
                   children: [
                     IconButton(
                       icon: Icon(Icons.edit),
-                      onPressed: () {
-                        // Perform edit action here based on role['id']
-                        // userHandler.updateData(role['id'], !user['status']);
-                        // setState(() {});
-                      },
+                      onPressed: () => widget.onTapUpdate(user),
                     ),
                     IconButton(
                       icon: Icon(Icons.delete),
